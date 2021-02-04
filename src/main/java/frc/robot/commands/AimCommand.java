@@ -63,6 +63,7 @@ public class AimCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    Limelight.getInstance().setLightState(Limelight.LightMode.ON);
     double error = Limelight.getInstance().getXAngle();
     double speed = m_controller.calculate(error);
     speed += Math.copySign(Constants.PID.Aim.FEED_FORWARD, speed);
