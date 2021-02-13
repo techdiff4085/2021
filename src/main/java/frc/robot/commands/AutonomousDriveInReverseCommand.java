@@ -10,7 +10,7 @@ import frc.robot.subsystems.DriveSubsystem;
 /**
  * An example command that uses an example subsystem.
  */
-public class AutonomousDriveCommand extends PIDCommand {
+public class AutonomousDriveInReverseCommand extends PIDCommand {
   private final DriveSubsystem m_subsystem;
   private double m_distance;
   private AHRS m_navX;
@@ -22,12 +22,12 @@ public class AutonomousDriveCommand extends PIDCommand {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public AutonomousDriveCommand(DriveSubsystem subsystem, AHRS navX, double distance, double turnToAngle ) {
+  public AutonomousDriveInReverseCommand(DriveSubsystem subsystem, AHRS navX, double distance, double turnToAngle ) {
     super(
       new PIDController(Constants.KP, Constants.KI, Constants.KD),  //controller that controls the output 
       navX::getAngle, //measurement source
       turnToAngle, // target angle degrees
-      output -> AutonomousDriveCommand.driveRobot(subsystem, navX, output, turnToAngle),
+      output -> AutonomousDriveInReverseCommand.driveRobot(subsystem, navX, output, turnToAngle),
       subsystem);
 
     // Set the controller to be continuous (because it is an angle controller)
@@ -73,7 +73,7 @@ public class AutonomousDriveCommand extends PIDCommand {
     System.out.println("Turning " + turnToAngle + ": difference "  + difference + " : yaw " + navX.getYaw() + ":" + output);
     //System.out.println(navX.getYaw() + ":" + difference + ":" + output);
 
-    subsystem.drive(-0.65-difference,-0.65 + difference); //how to use the output of the navX
+    subsystem.drive(-1*(-0.65 + difference),-1 * ( -0.65 - difference)); //how to use the output of the navX
   }
 
 }

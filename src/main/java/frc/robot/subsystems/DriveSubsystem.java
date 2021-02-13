@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -23,6 +24,7 @@ public class DriveSubsystem extends SubsystemBase {
   DifferentialDrive m_drive = new DifferentialDrive(leftMotors, rightMotors);
   public Encoder encoderL = new Encoder(5, 6, false);
   DigitalInput StopDrive = new DigitalInput(Constants.Stop_Drive_LS);
+  AHRS m_navX;
 
   // Encoder driveEncoder1LF = new Encoder(Constants.Encode_Port1,
   // Constants.Encode_Port2, false, Encoder.EncodingType.k2X);
@@ -41,11 +43,12 @@ public class DriveSubsystem extends SubsystemBase {
     
     leftMotors.setInverted(true);
     rightMotors.setInverted(true);
-    encoderL.setDistancePerPulse(18.84 / 20.0);
+    encoderL.setDistancePerPulse(1 / 20.0);
     encoderL.reset();
   }
 
   public void drive(double rSpeed, double lSpeed) {
+    //System.out.println(m_navX.getYaw());
     m_drive.tankDrive(lSpeed, rSpeed);
   }
 // used when only one joystick is used to control the robot
@@ -63,6 +66,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void resetEncoder() {
     encoderL.reset();
+  }
+
+  public void setNavX(AHRS navX){
+    m_navX = navX;
   }
 
   @Override
