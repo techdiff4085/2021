@@ -73,7 +73,7 @@ public class AutonomousDriveInReverseCommand extends PIDCommand {
     System.out.println("Turning " + turnToAngle + ": difference "  + difference + " : yaw " + navX.getYaw() + ":" + output);
     //System.out.println(navX.getYaw() + ":" + difference + ":" + output);
 
-    subsystem.drive(-1*(-0.65 + difference),-1 * ( -0.65 - difference)); //how to use the output of the navX
+    subsystem.drive(-1*(-0.70 + difference),-1 * ( -0.70 - difference)); //how to use the output of the navX
   }
 
 }

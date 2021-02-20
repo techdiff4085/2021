@@ -140,27 +140,27 @@ public class RobotContainer {
     //Limelight.getInstance().setLightState(Limelight.LightMode.ON);
     navX.zeroYaw();
 
-    /*Yellow autounomus.
-    return new SequentialCommandGroup(
-      new AutonomousDriveCommand(driveSubsystem, navX, 10, 0),
+     //Yellow autounomus.
+    /*return new SequentialCommandGroup(
+      new AutonomousDriveCommand(driveSubsystem, navX, 15, 0),
       new AutonomousDriveCommand(driveSubsystem, navX, 25, -90),
       new AutonomousDriveCommand(driveSubsystem, navX, 190, 0),
       new AutonomousDriveCommand(driveSubsystem, navX, 70, 95),
       new AutonomousDriveCommand(driveSubsystem, navX, 30, 0),
-      new AutonomousDriveCommand(driveSubsystem, navX, 40, -85),
+      new AutonomousDriveCommand(driveSubsystem, navX, 35, -85),
       new AutonomousDriveCommand(driveSubsystem, navX, 30, -179),
       new AutonomousDriveCommand(driveSubsystem, navX, 10, -270),
-      new AutonomousDriveCommand(driveSubsystem, navX, 40, -270),
+      new AutonomousDriveCommand(driveSubsystem, navX, 30, -270),
       new AutonomousDriveCommand(driveSubsystem, navX, 185, -175),
       new AutonomousDriveCommand(driveSubsystem, navX, 25, -85),
-      new AutonomousDriveCommand(driveSubsystem, navX, 45, -90),
-      new AutonomousDriveCommand(driveSubsystem, navX, 43, -180)*/
+      new AutonomousDriveCommand(driveSubsystem, navX, 40, -90),
+      new AutonomousDriveCommand(driveSubsystem, navX, 40, -180)*/
 
-      /* Blue autonav
+      // Blue autonav
       return new SequentialCommandGroup(
         new AutonomousDriveCommand(driveSubsystem, navX, 115, 0),
         new AutonomousDriveCommand(driveSubsystem, navX, 30, 90),
-        new AutonomousDriveCommand(driveSubsystem, navX, 40, 90),
+        new AutonomousDriveCommand(driveSubsystem, navX, 35, 90),
         new AutonomousDriveCommand(driveSubsystem, navX, 10, 180),
         new AutonomousDriveCommand(driveSubsystem, navX, 20, 195),
         new AutonomousDriveCommand(driveSubsystem, navX, 40, 195),
@@ -168,7 +168,7 @@ public class RobotContainer {
         new AutonomousDriveCommand(driveSubsystem, navX, 50, 360),
         new AutonomousDriveCommand(driveSubsystem, navX, 90, 360),
         new AutonomousDriveCommand(driveSubsystem, navX, 35, 270),
-        new AutonomousDriveCommand(driveSubsystem, navX, 35, 180),
+        new AutonomousDriveCommand(driveSubsystem, navX, 30, 180),
         new AutonomousDriveCommand(driveSubsystem, navX, 35, 90),
         new AutonomousDriveCommand(driveSubsystem, navX, 10, 45),
         new AutonomousDriveCommand(driveSubsystem, navX, 65, 45),
@@ -177,10 +177,11 @@ public class RobotContainer {
         new AutonomousDriveCommand(driveSubsystem, navX, 20, -90),
         new AutonomousDriveCommand(driveSubsystem, navX, 30, -180),
         new AutonomousDriveCommand(driveSubsystem, navX, 50, -180),
-        new AutonomousDriveCommand(driveSubsystem, navX, 185, -170)*/
+        new AutonomousDriveCommand(driveSubsystem, navX, 190, -170)
+       // new AutonomousDriveCommand(driveSubsystem, navX, 85, -10)
 
-      
-        return new SequentialCommandGroup(
+      // green race
+       /* return new SequentialCommandGroup(
           new AutonomousDriveCommand(driveSubsystem, navX, 15, 0),
           new AutonomousDriveCommand(driveSubsystem, navX, 40, -90),
           new AutonomousDriveInReverseCommand(driveSubsystem, navX, 10, -110),
@@ -190,14 +191,14 @@ public class RobotContainer {
           new AutonomousDriveInReverseCommand(driveSubsystem, navX, 30, -180),
           new AutonomousDriveInReverseCommand(driveSubsystem, navX, 35, -270),
           new AutonomousDriveInReverseCommand(driveSubsystem, navX, 105, -270),
-          new AutonomousDriveCommand(driveSubsystem, navX, 75, -270),
+          new AutonomousDriveCommand(driveSubsystem, navX, 72, -270),
           new AutonomousDriveCommand(driveSubsystem, navX, 30, -360),
           new AutonomousDriveCommand(driveSubsystem, navX, 35, -360),
           new AutonomousDriveCommand(driveSubsystem, navX, 30, -450),
-          new AutonomousDriveCommand(driveSubsystem, navX,  70, -450),
-          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 20, -450),
-          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 20, -540),
-          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 70, -540)
+          new AutonomousDriveCommand(driveSubsystem, navX,  71, -450),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 15, -450),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 15, -540),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 70, -540)*/
 
         //new AutonomousDriveCommand(driveSubsystem, navX, 20, 0)
       //if anything goes wrong its Grants fault

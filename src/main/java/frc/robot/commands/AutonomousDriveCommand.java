@@ -73,7 +73,13 @@ public class AutonomousDriveCommand extends PIDCommand {
     System.out.println("Turning " + turnToAngle + ": difference "  + difference + " : yaw " + navX.getYaw() + ":" + output);
     //System.out.println(navX.getYaw() + ":" + difference + ":" + output);
 
-    subsystem.drive(-0.65-difference,-0.65 + difference); //how to use the output of the navX
+    if ( (int) turnToAngle == -170) {
+     subsystem.drive(-1.00-difference,-1.00 + difference); //how to use the output of the navX
+     System.out.println("Inside turntoAngle is 195 ------------------------- ");
+    }else{ 
+     System.out.println("Inside turntoangle is ---------NOT ----------195");
+     subsystem.drive(-0.70-difference,-0.70 + difference); //how to use the output of the navX
+    }  
   }
 
 }
