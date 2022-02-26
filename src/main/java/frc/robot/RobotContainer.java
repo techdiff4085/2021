@@ -7,39 +7,28 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
 
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutonomousDriveCommand;
-/*import frc.robot.commands.ColorWheelLeftCommand;
-import frc.robot.commands.ColorWheelRightCommand;
-import frc.robot.commands.ColorWheelStopCommand;*/
-
+import frc.robot.commands.AutonomousDriveInReverseCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorCommand;
-//import frc.robot.commands.ElevatorStopCommand;
-//import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IndexStopCommand;
-import frc.robot.commands.ShootByDistanceCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
-//import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.AimCommand;
@@ -65,6 +54,8 @@ public class RobotContainer {
   Joystick rightJoystick = new Joystick(1);
   Joystick shooterJoystick = new Joystick(2);
 
+  AHRS navX;
+
   DriveCommand driveCommand = new DriveCommand(driveSubsystem, leftJoystick, rightJoystick);
 
   JoystickButton shootButton = new JoystickButton(shooterJoystick, Constants.SHOOT_BUTTON);
@@ -83,18 +74,28 @@ public class RobotContainer {
   JoystickButton shootDistance = new JoystickButton(shooterJoystick, Constants.DISTANCE_SHOOT);
 
 
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure Limelight to stream both cameras
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(1);
-
+    //NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(1);
+ 
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(driveCommand);
     
+    try {
+      /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
+      /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+      /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+      navX = new AHRS(SPI.Port.kMXP); 
+    } catch (RuntimeException ex ) {
+        DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
+    }
+
+    driveSubsystem.setNavX(navX);
+
   }
  
 
@@ -137,14 +138,71 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     // This code works when the front left corner of the robot is 8'6" from the wall.
     //Limelight.getInstance().setLightState(Limelight.LightMode.ON);
-System.out.println("in autonomous");
-    return new SequentialCommandGroup(
+    navX.zeroYaw();
 
-      //Move the robot
-      new AutonomousDriveCommand(driveSubsystem, 650)
-      
+     //Yellow autounomus.
+    /*return new SequentialCommandGroup(
+      new AutonomousDriveCommand(driveSubsystem, navX, 15, 0),
+      new AutonomousDriveCommand(driveSubsystem, navX, 25, -90),
+      new AutonomousDriveCommand(driveSubsystem, navX, 190, 0),
+      new AutonomousDriveCommand(driveSubsystem, navX, 70, 95),
+      new AutonomousDriveCommand(driveSubsystem, navX, 30, 0),
+      new AutonomousDriveCommand(driveSubsystem, navX, 35, -85),
+      new AutonomousDriveCommand(driveSubsystem, navX, 30, -179),
+      new AutonomousDriveCommand(driveSubsystem, navX, 10, -270),
+      new AutonomousDriveCommand(driveSubsystem, navX, 30, -270),
+      new AutonomousDriveCommand(driveSubsystem, navX, 185, -175),
+      new AutonomousDriveCommand(driveSubsystem, navX, 25, -85),
+      new AutonomousDriveCommand(driveSubsystem, navX, 40, -90),
+      new AutonomousDriveCommand(driveSubsystem, navX, 40, -180)*/
+
+      // Blue autonav
+      return new SequentialCommandGroup(
+        new AutonomousDriveCommand(driveSubsystem, navX, 115, 0),
+        new AutonomousDriveCommand(driveSubsystem, navX, 30, 90),
+        new AutonomousDriveCommand(driveSubsystem, navX, 35, 90),
+        new AutonomousDriveCommand(driveSubsystem, navX, 10, 180),
+        new AutonomousDriveCommand(driveSubsystem, navX, 20, 195),
+        new AutonomousDriveCommand(driveSubsystem, navX, 40, 195),
+        new AutonomousDriveCommand(driveSubsystem, navX, 50, 270),
+        new AutonomousDriveCommand(driveSubsystem, navX, 50, 360),
+        new AutonomousDriveCommand(driveSubsystem, navX, 90, 360),
+        new AutonomousDriveCommand(driveSubsystem, navX, 35, 270),
+        new AutonomousDriveCommand(driveSubsystem, navX, 30, 180),
+        new AutonomousDriveCommand(driveSubsystem, navX, 35, 90),
+        new AutonomousDriveCommand(driveSubsystem, navX, 10, 45),
+        new AutonomousDriveCommand(driveSubsystem, navX, 65, 45),
+        new AutonomousDriveCommand(driveSubsystem, navX, 40, 0),
+        new AutonomousDriveCommand(driveSubsystem, navX, 15, -90),
+        new AutonomousDriveCommand(driveSubsystem, navX, 20, -90),
+        new AutonomousDriveCommand(driveSubsystem, navX, 30, -180),
+        new AutonomousDriveCommand(driveSubsystem, navX, 50, -180),
+        new AutonomousDriveCommand(driveSubsystem, navX, 190, -170)
+       // new AutonomousDriveCommand(driveSubsystem, navX, 85, -10)
+
+      // green race
+       /* return new SequentialCommandGroup(
+          new AutonomousDriveCommand(driveSubsystem, navX, 15, 0),
+          new AutonomousDriveCommand(driveSubsystem, navX, 40, -90),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 10, -110),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 10, -150),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 10, -130),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 70, -130),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 30, -180),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 35, -270),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 105, -270),
+          new AutonomousDriveCommand(driveSubsystem, navX, 72, -270),
+          new AutonomousDriveCommand(driveSubsystem, navX, 30, -360),
+          new AutonomousDriveCommand(driveSubsystem, navX, 35, -360),
+          new AutonomousDriveCommand(driveSubsystem, navX, 30, -450),
+          new AutonomousDriveCommand(driveSubsystem, navX,  71, -450),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 15, -450),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 15, -540),
+          new AutonomousDriveInReverseCommand(driveSubsystem, navX, 70, -540)*/
+
+        //new AutonomousDriveCommand(driveSubsystem, navX, 20, 0)
       //if anything goes wrong its Grants fault
-    ).withTimeout(15);
+      ).withTimeout(300);
     
   }
 }

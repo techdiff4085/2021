@@ -44,7 +44,7 @@ public class DriveCommand extends CommandBase {
       double rightAxis = rightJoystick.getY();
       double xboxVertical = leftJoystick.getRawAxis(1);
       double xboxHorizontal = leftJoystick.getRawAxis(4);
-      m_subsystem.drive(rightAxis*Math.abs(rightAxis)/1.3, leftAxis*Math.abs(leftAxis)/1.3);
+      m_subsystem.drive(rightAxis*Math.abs(rightAxis)/1.1, leftAxis*Math.abs(leftAxis)/1.1);
       //m_subsystem.arcadeDrive(xboxVertical, -xboxHorizontal);
 
       if (toggleOn) {
@@ -70,12 +70,7 @@ public class DriveCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(this.m_subsystem.driveStopLimitSwitch()){
-      return true;
-    }
-    else {
-      return false;
-    }
+    return false;
     
   }
 }

@@ -37,6 +37,8 @@ public class ShooterSubsystem extends PIDSubsystem {
   }
                                                                                                   
   public void shootByDistance() {
+    shoot(-0.5);
+    /*
     System.out.println("Inside shoot by distance");
     if (!Limelight.getInstance().hasValidTarget()) {
       shoot(-0.45);
@@ -51,7 +53,7 @@ public class ShooterSubsystem extends PIDSubsystem {
             shoot(-.57);
             System.out.println("B");
         } else if (distance >= 96 && distance < 168) {
-            shoot(-.55);
+            shoot(-.51);
             System.out.println("C");
             
         } else if (distance >= 168 && distance < 180) {
@@ -59,13 +61,14 @@ public class ShooterSubsystem extends PIDSubsystem {
             System.out.println("D");
         } else if (distance >= 180 && distance < 230) {
           // add code to move robot to the left  
-          shoot(-.6);
+          shoot(-.57);
             System.out.println("E");
         } else {
             shoot(-0.6);
             System.out.println("Stop Callie, too far. Bad choice");
         }
       }
+      */
   }
 
   public void stopShooter() {
